@@ -3,6 +3,7 @@ package com.smartuniapp;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.mackentoch.beaconsandroid.BeaconsAndroidPackage;
 import com.i18n.reactnativei18n.ReactNativeI18n;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.learnium.RNDeviceInfo.RNDeviceInfo;
@@ -26,6 +27,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new BeaconsAndroidPackage(),
             new ReactNativeI18n(),
             new VectorIconsPackage(),
             new RNDeviceInfo()

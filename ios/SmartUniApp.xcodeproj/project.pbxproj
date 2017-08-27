@@ -51,6 +51,7 @@
 		124C110375E240DDB1BBBE47 /* libyoga.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EC63B17CADDE4AEBB9C412B7 /* libyoga.a */; };
 		AE020FE96A4F4760BACCAE79 /* libcxxreact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DDB5ECFE4439411B83FD1875 /* libcxxreact.a */; };
 		5A41BA2A907B41BD957449D7 /* libjschelpers.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 180AF255007E4004ACAE6BC9 /* libjschelpers.a */; };
+		441D1D5EA7C04F18998742DC /* libRNiBeacon.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 918A7288946A47119B5C8FE8 /* libRNiBeacon.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -289,6 +290,8 @@
 		EC63B17CADDE4AEBB9C412B7 /* libyoga.a */ = {isa = PBXFileReference; name = "libyoga.a"; path = "libyoga.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 		DDB5ECFE4439411B83FD1875 /* libcxxreact.a */ = {isa = PBXFileReference; name = "libcxxreact.a"; path = "libcxxreact.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 		180AF255007E4004ACAE6BC9 /* libjschelpers.a */ = {isa = PBXFileReference; name = "libjschelpers.a"; path = "libjschelpers.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		57B2F6F459614E41A2EC271B /* RNiBeacon.xcodeproj */ = {isa = PBXFileReference; name = "RNiBeacon.xcodeproj"; path = "../node_modules/react-native-beacons-manager/ios/RNiBeacon/RNiBeacon.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		918A7288946A47119B5C8FE8 /* libRNiBeacon.a */ = {isa = PBXFileReference; name = "libRNiBeacon.a"; path = "libRNiBeacon.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -321,6 +324,7 @@
 				124C110375E240DDB1BBBE47 /* libyoga.a in Frameworks */,
 				AE020FE96A4F4760BACCAE79 /* libcxxreact.a in Frameworks */,
 				5A41BA2A907B41BD957449D7 /* libjschelpers.a in Frameworks */,
+				441D1D5EA7C04F18998742DC /* libRNiBeacon.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -490,6 +494,7 @@
 				7C52E54718A643AA854D7173 /* RNDeviceInfo.xcodeproj */,
 				0FB21C232DEA4CE5B1F6F95C /* RNVectorIcons.xcodeproj */,
 				DCE8C318A59649B7BD5D8C3B /* RNI18n.xcodeproj */,
+				57B2F6F459614E41A2EC271B /* RNiBeacon.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -1052,12 +1057,14 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-device-info/RNDeviceInfo",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)/../node_modules/react-native-i18n/RNI18n",
+					"$(SRCROOT)/../node_modules/react-native-beacons-manager/ios/RNiBeacon/RNiBeacon",
 				);
 			};
 			name = Debug;
@@ -1084,12 +1091,14 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-device-info/RNDeviceInfo",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)/../node_modules/react-native-i18n/RNI18n",
+					"$(SRCROOT)/../node_modules/react-native-beacons-manager/ios/RNiBeacon/RNiBeacon",
 				);
 			};
 			name = Release;
@@ -1114,6 +1123,7 @@
 					"$(SRCROOT)/../node_modules/react-native-device-info/RNDeviceInfo",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)/../node_modules/react-native-i18n/RNI18n",
+					"$(SRCROOT)/../node_modules/react-native-beacons-manager/ios/RNiBeacon/RNiBeacon",
 				);
 			};
 			name = Debug;
@@ -1137,6 +1147,7 @@
 					"$(SRCROOT)/../node_modules/react-native-device-info/RNDeviceInfo",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)/../node_modules/react-native-i18n/RNI18n",
+					"$(SRCROOT)/../node_modules/react-native-beacons-manager/ios/RNiBeacon/RNiBeacon",
 				);
 			};
 			name = Release;
@@ -1172,12 +1183,14 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-device-info/RNDeviceInfo",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)/../node_modules/react-native-i18n/RNI18n",
+					"$(SRCROOT)/../node_modules/react-native-beacons-manager/ios/RNiBeacon/RNiBeacon",
 				);
 			};
 			name = Debug;
@@ -1213,12 +1226,14 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-device-info/RNDeviceInfo",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)/../node_modules/react-native-i18n/RNI18n",
+					"$(SRCROOT)/../node_modules/react-native-beacons-manager/ios/RNiBeacon/RNiBeacon",
 				);
 			};
 			name = Release;
@@ -1249,6 +1264,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 			};
 			name = Debug;
@@ -1273,6 +1289,7 @@
 				TVOS_DEPLOYMENT_TARGET = 10.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",

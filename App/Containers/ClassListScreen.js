@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
-import { View, Text, ListView } from 'react-native'
+import { View, Text, ListView, FlatList } from 'react-native'
 import { connect } from 'react-redux'
+import Attendable from '../Components/Attendable'
 
 // For empty lists
 // import AlertMessage from '../Components/AlertMessage'
@@ -21,9 +22,9 @@ class ClassListScreen extends Component {
     * Usually this should come from Redux mapStateToProps
     *************************************************************/
     const dataObjects = [
-      {title: 'React 101', description: 'Learn the basic of building react app', time: '8:00 AM'},
-      {title: 'Golang 101', description: 'Learn the fun of Golang', time: '9:00 AM'},
-      {title: 'Microservices 101', description: 'Learn how to build your 1st microservice', time: '2:00 PM'},
+      {key: 1, title: 'React 101', description: 'Learn the basic of building react app', time: '8:00 AM', uuid: 'e2c56db5-dffb-48d2-b060-d0f5a71096e0'},
+      {key: 2, title: 'Golang 101', description: 'Learn the fun of Golang', time: '9:00 AM'},
+      {key: 3, title: 'Microservices 101', description: 'Learn how to build your 1st microservice', time: '2:00 PM'}
     ]
 
     /* ***********************************************************
@@ -39,7 +40,8 @@ class ClassListScreen extends Component {
 
     // Datasource is always in state
     this.state = {
-      dataSource: ds.cloneWithRows(dataObjects)
+      dataSource: ds.cloneWithRows(dataObjects),
+      dataObjects: dataObjects
     }
   }
 
@@ -51,12 +53,20 @@ class ClassListScreen extends Component {
   * e.g.
     return <MyCustomCell title={rowData.title} description={rowData.description} />
   *************************************************************/
-  renderRow (rowData) {
+  renderRow = ({item}) => {
     return (
+      /**
       <View style={styles.row}>
         <Text style={styles.boldLabel}>{rowData.title} ({rowData.time})</Text>
         <Text style={styles.label}>{rowData.description}</Text>
+        { rowData.uuid &&
+          <BeaconBase
+            uuid={rowData.uuid}
+            identifier='smartuni'
+            onEnter={this.onEnter}/> }
       </View>
+       */
+      <Attendable data={item} />
     )
   }
 
@@ -93,14 +103,25 @@ class ClassListScreen extends Component {
 
   render () {
     return (
+      /**
       <View style={styles.container}>
-        <ListView
+          <ListView
           contentContainerStyle={styles.listContent}
           dataSource={this.state.dataSource}
           renderRow={this.renderRow}
           renderFooter={this.renderFooter}
           enableEmptySections
           pageSize={15}
+        />
+       */
+      <View style={styles.container}>
+        <FlatList
+          ref='scheduleList'
+          data={this.state.dataObjects}
+          extraData={this.props}
+          renderItem={this.renderRow}
+          contentContainerStyle={styles.listContent}
+          showsVerticalScrollIndicator={false}
         />
       </View>
     )

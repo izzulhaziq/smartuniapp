@@ -26,6 +26,7 @@
   },
   "dependencies": {
     "apisauce": "^0.14.0",
+    "flow-bin": "^0.53.1",
     "format-json": "^1.0.3",
     "lodash": "^4.17.2",
     "prop-types": "^15.5.10",
@@ -34,6 +35,8 @@
     "react": "16.0.0-alpha.12",
     "react-native": "0.45.1",
     "react-native-animatable": "^1.2.3",
+    "react-native-beacons-manager": "^1.0.6",
+    "react-native-bluetooth-state": "^2.0.0",
     "react-native-config": "^0.2.1",
     "react-native-device-info": "0.10.2",
     "react-native-drawer": "^2.3.0",
@@ -52,6 +55,7 @@
     "babel-jest": "20.0.3",
     "babel-plugin-ignite-ignore-reactotron": "^0.3.0",
     "babel-preset-es2015": "^6.18.0",
+    "babel-preset-flow": "^6.23.0",
     "babel-preset-react-native": "2.0.0",
     "enzyme": "^2.6.0",
     "husky": "^0.13.1",
@@ -62,6 +66,7 @@
     "ignite-standard": "^1.0.0",
     "ignite-vector-icons": "^1.0.0",
     "jest": "20.0.4",
+    "jest-cli": "^20.0.4",
     "mockery": "^2.0.0",
     "react-addons-test-utils": "~15.4.1",
     "react-dom": "~15.4.1",
@@ -79,6 +84,7 @@
     ],
     "testPathIgnorePatterns": [
       "/node_modules/",
+      "/Components/",
       "Tests/Setup.js"
     ],
     "setupFiles": [
