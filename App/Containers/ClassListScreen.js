@@ -22,7 +22,13 @@ class ClassListScreen extends Component {
     * Usually this should come from Redux mapStateToProps
     *************************************************************/
     const dataObjects = [
-      {key: 1, title: 'React 101', description: 'Learn the basic of building react app', time: '8:00 AM', uuid: 'e2c56db5-dffb-48d2-b060-d0f5a71096e0'},
+      {
+        key: 1,
+        title: 'React 101',
+        description: 'Learn the basic of building react app',
+        time: '8:00 AM',
+        uuid: 'f7826da6-4fa2-4e98-8024-bc5b71e0893e'
+      },
       {key: 2, title: 'Golang 101', description: 'Learn the fun of Golang', time: '9:00 AM'},
       {key: 3, title: 'Microservices 101', description: 'Learn how to build your 1st microservice', time: '2:00 PM'}
     ]

@@ -11,18 +11,12 @@ export default class LaunchScreen extends Component {
   render () {
     return (
       <View style={styles.mainContainer}>
-        <Image source={Images.background} style={styles.backgroundImage} resizeMode='stretch' />
         <ScrollView style={styles.container}>
-
           <View style={styles.section} >
             <Text style={styles.titleText}>
-              Hello Izzul!
-            </Text>
-            <Text style={styles.sectionText}>
-              Your classes for today
+              Classes
             </Text>
           </View>
-
           <ClassListScreen />
         </ScrollView>
       </View>

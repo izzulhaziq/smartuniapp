@@ -48,7 +48,7 @@ export default class BeaconBase extends Component {
       .catch(error => console.log(`Beacons ranging not started, error: ${error}`))
 
     Beacons
-      .startRangingBeaconsInRegion(identifier, uuid) // or like  < v1.0.7: .startRangingBeaconsInRegion(identifier, uuid)
+      .startMonitoringForRegion(identifier, uuid) // or like  < v1.0.7: .startRangingBeaconsInRegion(identifier, uuid)
       .then(() => console.log('Beacons monitoring started succesfully'))
       .catch(error => console.log(`Beacons monitoring not started, error: ${error}`))
   }
@@ -60,7 +60,7 @@ export default class BeaconBase extends Component {
       (data) => {
         console.log('beaconsDidRange data: ', data)
         if (data.beacons.length > 0 && this.props.onWithinRange) {
-          this.props.onWithinRange()
+          this.props.onWithinRange(data)
         }
       }
     )
@@ -109,6 +109,6 @@ export default class BeaconBase extends Component {
   }
 
   render () {
-    return (<Text>Beacon</Text>)
+    return (<Text></Text>)
   }
 }

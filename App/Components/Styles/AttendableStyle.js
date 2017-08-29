@@ -8,11 +8,11 @@ export default StyleSheet.create({
   },
   row: {
     flex: 1,
-    backgroundColor: Colors.fire,
-    marginVertical: Metrics.smallMargin,
+    backgroundColor: Colors.bloodOrange,
+    marginVertical: Metrics.smallMargin / 2,
     justifyContent: 'center',
-    paddingTop: Metrics.baseMargin,
-    paddingBottom: Metrics.baseMargin
+    paddingTop: Metrics.smallMargin,
+    paddingBottom: Metrics.smallMargin
   },
   boldLabel: {
     fontWeight: 'bold',

@@ -16,7 +16,8 @@ export default class Attendable extends Component {
     // Datasource is always in state
     this.state = {
       hasCheckedIn: false,
-      hasCheckedOut: false
+      hasCheckedOut: false,
+      distance: 0
     }
 
     this.onEnter = this.onEnter.bind(this)
@@ -38,11 +39,19 @@ export default class Attendable extends Component {
   }
 
   onExit () {
-    this.setState({ hasCheckedOut: true })
+    this.setState({ hasCheckedOut: false })
   }
 
-  onWithinRange () {
-    this.setState({ hasCheckedIn: true })
+  onWithinRange (data) {
+    const beacon = data.beacons[0]
+    let distance = "NA"
+    if (beacon.distance) {
+      distance = beacon.distance.toFixed(2)
+    }
+    this.setState({
+      hasCheckedIn: true,
+      distance: distance
+    })
   }
 
   render () {
@@ -50,12 +59,13 @@ export default class Attendable extends Component {
       <View style={styles.row}>
         <Text style={styles.boldLabel}>{this.props.data.title} ({this.props.data.time})</Text>
         <Text style={styles.label}>{this.props.data.description}</Text>
-        <Text style={styles.label}>Checked in? {this.state.hasCheckedIn ? 'Yes' : 'No'}</Text>
-        <Text style={styles.label}>Checked out? {this.state.hasCheckedOut ? 'Yes' : 'No'}</Text>
+        <Text style={styles.label}>Checked in: {this.state.hasCheckedIn ? 'Yes' : 'No'}</Text>
+        <Text style={styles.label}>Checked out: {this.state.hasCheckedOut ? 'Yes' : 'No'}</Text>
+        <Text style={styles.label}>Distance: {this.state.distance} m</Text>
         { this.props.data.uuid &&
           <BeaconBase
             uuid={this.props.data.uuid}
-            identifier='smartuni'
+            identifier='Kontakt'
             onEnter={this.onEnter}
             onExit={this.onExit}
             onWithinRange={this.onWithinRange}
