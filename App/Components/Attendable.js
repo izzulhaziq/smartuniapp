@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import { View, Text } from 'react-native'
 import styles from './Styles/AttendableStyle'
 import BeaconBase from '../Components/BeaconBase'
+import { Card } from 'react-native-material-ui'
 
 export default class Attendable extends Component {
   state = {
@@ -44,7 +45,7 @@ export default class Attendable extends Component {
 
   onWithinRange (data) {
     const beacon = data.beacons[0]
-    let distance = "NA"
+    let distance = 'NA'
     if (beacon.distance) {
       distance = beacon.distance.toFixed(2)
     }
@@ -56,20 +57,22 @@ export default class Attendable extends Component {
 
   render () {
     return (
-      <View style={styles.row}>
-        <Text style={styles.boldLabel}>{this.props.data.title} ({this.props.data.time})</Text>
-        <Text style={styles.label}>{this.props.data.description}</Text>
-        <Text style={styles.label}>Checked in: {this.state.hasCheckedIn ? 'Yes' : 'No'}</Text>
-        <Text style={styles.label}>Checked out: {this.state.hasCheckedOut ? 'Yes' : 'No'}</Text>
-        <Text style={styles.label}>Distance: {this.state.distance} m</Text>
-        { this.props.data.uuid &&
-          <BeaconBase
-            uuid={this.props.data.uuid}
-            identifier='Kontakt'
-            onEnter={this.onEnter}
-            onExit={this.onExit}
-            onWithinRange={this.onWithinRange}
-            fenceDistance={1} /> }
+      <View>
+        <Card>
+          <Text style={styles.boldLabel}>{this.props.data.title}</Text>
+          <Text style={styles.label}>{this.props.data.description}</Text>
+          <Text style={styles.label}>Checked in: {this.state.hasCheckedIn ? 'Yes' : 'No'}</Text>
+          <Text style={styles.label}>Checked out: {this.state.hasCheckedOut ? 'Yes' : 'No'}</Text>
+          <Text style={styles.label}>Distance: {this.state.distance} m</Text>
+          { this.props.data.uuid &&
+            <BeaconBase
+              uuid={this.props.data.uuid}
+              identifier='Kontakt'
+              onEnter={this.onEnter}
+              onExit={this.onExit}
+              onWithinRange={this.onWithinRange}
+              fenceDistance={1} /> }
+        </Card>
       </View>
     )
   }

@@ -120,7 +120,7 @@ class ClassListScreen extends Component {
           pageSize={15}
         />
        */
-      <View style={styles.container}>
+      <View>
         <FlatList
           ref='scheduleList'
           data={this.state.dataObjects}

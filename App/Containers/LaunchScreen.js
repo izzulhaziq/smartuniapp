@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
-import { ScrollView, Text, Image, View } from 'react-native'
+import { ScrollView, Text, View } from 'react-native'
 import ClassListScreen from './ClassListScreen.js'
-
-import { Images } from '../Themes'
+import { Toolbar } from 'react-native-material-ui'
 
 // Styles
 import styles from './Styles/LaunchScreenStyles'
@@ -12,10 +11,13 @@ export default class LaunchScreen extends Component {
     return (
       <View style={styles.mainContainer}>
         <ScrollView style={styles.container}>
-          <View style={styles.section} >
-            <Text style={styles.titleText}>
-              Classes
-            </Text>
+          <View>
+            <Toolbar
+              leftElement="menu"
+              centerElement="Classes"
+              rightElement=""
+              isSearchActive={false}
+            />
           </View>
           <ClassListScreen />
         </ScrollView>

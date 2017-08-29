@@ -109,6 +109,6 @@ export default class BeaconBase extends Component {
   }
 
   render () {
-    return (<Text></Text>)
+    return (<Text />)
   }
 }

@@ -4,9 +4,22 @@ import React, { Component } from 'react'
 import { Provider } from 'react-redux'
 import RootContainer from './RootContainer'
 import createStore from '../Redux'
+import { COLOR, ThemeProvider } from 'react-native-material-ui'
 
 // create our store
 const store = createStore()
+
+const uiTheme = {
+  palette: {
+    primaryColor: COLOR.lightBlue800,
+    accentColor: COLOR.pink500,
+  },
+  card: {
+    container: {
+      padding: 10
+    }
+  }
+}
 
 /**
  * Provides an entry point into our application.  Both index.ios.js and index.android.js
@@ -21,7 +34,9 @@ class App extends Component {
   render () {
     return (
       <Provider store={store}>
-        <RootContainer />
+        <ThemeProvider uiTheme={uiTheme}>
+          <RootContainer />
+        </ThemeProvider>
       </Provider>
     )
   }

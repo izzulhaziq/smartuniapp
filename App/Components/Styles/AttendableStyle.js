@@ -17,12 +17,12 @@ export default StyleSheet.create({
   boldLabel: {
     fontWeight: 'bold',
     alignSelf: 'center',
-    color: Colors.snow,
+    color: Colors.charcoal,
     textAlign: 'center',
     marginBottom: Metrics.smallMargin
   },
   label: {
-    textAlign: 'center',
-    color: Colors.snow
+    textAlign: 'left',
+    color: Colors.charcoal
   }
 })
