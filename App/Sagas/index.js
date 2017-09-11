@@ -6,11 +6,13 @@ import DebugConfig from '../Config/DebugConfig'
 /* ------------- Types ------------- */
 
 import { BeaconTypes } from '../Redux/BeaconRedux'
+import { LoginTypes } from '../Redux/LoginRedux'
 
 /* ------------- Sagas ------------- */
 
 import { beaconRanging, startRanging, stopRanging } from './BeaconSagas'
 import { startup, teardown } from './StartupSagas'
+import { login, logout } from './LoginSagas'
 
 /* ------------- API ------------- */
 
@@ -25,6 +27,8 @@ export default function * root () {
   yield [
     takeLatest(BeaconTypes.BEACON_START_RANGING, startRanging),
     takeLatest(BeaconTypes.BEACON_STOP_RANGING, stopRanging),
+    takeLatest(LoginTypes.LOGIN_REQUEST, login, api),
+    takeLatest(LoginTypes.LOGOUT_REQUEST, logout),
     call(beaconRanging)
   ]
   yield call(teardown)

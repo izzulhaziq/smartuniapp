@@ -14,7 +14,7 @@ const uiTheme = {
   palette: {
     // main theme colors
     primaryColor: COLOR.blueGrey900,
-    accentColor: COLOR.pink500,
+    accentColor: COLOR.pinkA700,
     // text color palette
     primaryTextColor: Color(COLOR.black).alpha(0.87).toString(),
     secondaryTextColor: Color(COLOR.black).alpha(0.54).toString(),

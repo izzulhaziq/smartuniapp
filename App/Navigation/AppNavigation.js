@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { StackNavigator, DrawerNavigator, TabNavigator } from 'react-navigation'
+import LoginScreen from '../Containers/LoginScreen'
 import SettingsScreen from '../Containers/SettingsScreen'
 import AttendableScreen from '../Containers/AttendableScreen'
 import AttendanceHistoryScreen from '../Containers/AttendanceHistoryScreen'
@@ -22,6 +23,12 @@ const ClassListNav = StackNavigator({
   }
 })
 
+const LoginNav = StackNavigator({
+  Login: { screen: LoginScreen } 
+}, {
+  initialRouteName: 'Login'
+})
+
 const AttendanceTab = TabNavigator({
   AttendableScreen: { screen: AttendableScreen },
   AttendanceHistory: { screen: AttendanceHistoryScreen }
@@ -37,8 +44,10 @@ const AttendanceTab = TabNavigator({
 const PrimaryNav = DrawerNavigator({
   Attendance: { screen: AttendanceTab },
   Classes: { screen: ClassListNav },
-  Settings: { screen: SettingsScreen }
+  Settings: { screen: SettingsScreen },
+  Login: { screen: LoginNav }
 }, {
+  initialRouteName: 'Login',
   contentComponent: props => <SideBar {...props} />
 })
 

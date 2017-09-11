@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import { Avatar, Drawer } from 'react-native-material-ui'
 
-export default class SideBar extends Component {
+class SideBar extends Component {
   render () {
     const { state } = this.props.navigation
     return (
@@ -13,39 +14,70 @@ export default class SideBar extends Component {
               dense: true,
               centerElement: {
                 primaryText: 'Izzul Haziq',
-                secondaryText: 'izzulhaziq@gmail.com'
+                secondaryText: this.props.username
               }
             }}
           />
         </Drawer.Header>
-        <Drawer.Section
-          divider
-          items={[
-            {
-              icon: 'history',
-              value: 'Attendance',
-              onPress: () => this.props.navigation.navigate('Attendance'),
-              active: state.routeName === 'Attendance'
-            },
-            {
-              icon: 'business',
-              value: 'Classes',
-              onPress: () => this.props.navigation.navigate('Classes'),
-              active: state.routeName === 'Classes'
-            }
-          ]}
-        />
-        <Drawer.Section
-          items={[
-            {
-              icon: 'settings',
-              value: 'Settings',
-              onPress: () => this.props.navigation.navigate('Settings'),
-              active: state.routeName === 'Settings'
-            }
-          ]}
-        />
+
+        { !this.props.hasLoggedIn &&
+          <Drawer.Section
+            items={[
+              { 
+                icon: 'warning',
+                value: 'Please sign in'
+              }
+            ]}
+          />
+        }
+
+        { this.props.hasLoggedIn &&
+          <Drawer.Section
+            divider
+            items={[
+              {
+                icon: 'history',
+                value: 'Attendance',
+                onPress: () => this.props.navigation.navigate('Attendance'),
+                active: state.routeName === 'Attendance'
+              },
+              {
+                icon: 'business',
+                value: 'Classes',
+                onPress: () => this.props.navigation.navigate('Classes'),
+                active: state.routeName === 'Classes'
+              }
+            ]}
+          />
+        }
+
+        { this.props.hasLoggedIn &&
+          <Drawer.Section
+            items={[
+              {
+                icon: 'settings',
+                value: 'Settings',
+                onPress: () => this.props.navigation.navigate('Settings'),
+                active: state.routeName === 'Settings'
+              }
+            ]}
+          />
+        }
       </Drawer>
     )
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    username: state.login.username,
+    hasLoggedIn: state.login.hasLoggedIn
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SideBar)

@@ -6,5 +6,15 @@ export default StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.frost
+  },
+  boldLabel: {
+    fontWeight: 'bold',
+    color: Colors.charcoal,
+    textAlign: 'left',
+    marginBottom: Metrics.baseMargin
+  },
+  cardContainer: {
+    flex: 1,
+    paddingTop: Metrics.baseMargin
   }
 })
