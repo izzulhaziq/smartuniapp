@@ -2,8 +2,7 @@ import React, { Component } from 'react'
 // import PropTypes from 'prop-types';
 import { View, Text } from 'react-native'
 import styles from './Styles/ClassInfoStyle'
-import { Card, Divider, Icon, Avatar } from 'react-native-material-ui'
-import { COLOR } from 'react-native-material-ui'
+import { Card, Divider, Icon, Avatar, COLOR } from 'react-native-material-ui'
 
 export default class ClassInfo extends Component {
   // // Prop type warnings
@@ -52,7 +51,7 @@ export default class ClassInfo extends Component {
           </View>
           <Divider />
           <View style={styles.container}>
-            <Icon name='person' size={22}/>
+            <Icon name='person' size={22} />
             <Text style={styles.label}> {this.props.data.lecturer}</Text>
           </View>
         </Card>

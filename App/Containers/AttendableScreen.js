@@ -1,24 +1,22 @@
 import React, { Component } from 'react'
-import { ScrollView, Text, KeyboardAvoidingView, View, FlatList } from 'react-native'
+import { ScrollView, Text, View } from 'react-native'
 import { connect } from 'react-redux'
 import BeaconActions from '../Redux/BeaconRedux'
 import AttendanceActions from '../Redux/AttendanceRedux'
-import { Toolbar, Subheader, ListItem, Card, Divider, Icon, Button, Avatar } from 'react-native-material-ui'
+import { Toolbar, Subheader, ListItem, Card, Divider, Icon, Button, Avatar, COLOR } from 'react-native-material-ui'
 import _ from 'lodash'
-import { COLOR } from 'react-native-material-ui'
 // Add Actions - replace 'Your' with whatever your reducer is called :)
 // import YourActions from '../Redux/YourRedux'
 
 // Styles
-import styles from './Styles/AttendableScreenStyle'
-import { listItemStyles } from './Styles/AttendableScreenStyle'
+import styles, { listItemStyles } from './Styles/AttendableScreenStyle'
 
 class AttendableScreen extends Component {
   static navigationOptions = {
     tabBarLabel: 'Nearby'
   }
 
-  constructor(props) {
+  constructor (props) {
     super(props)
 
     const classes = [
@@ -72,9 +70,9 @@ class AttendableScreen extends Component {
 
     return _.map(beaconsInRange, (b) => {
       const regClass = _.find(classes, (c) => {
-        return b.uniqueId == c.beaconId
+        return b.uniqueId === c.beaconId
       })
-      
+
       if (regClass) {
         return _.merge(regClass, {
           distance: b.accuracy,
@@ -88,16 +86,15 @@ class AttendableScreen extends Component {
   toggleScan () {
     if (!this.props.isScanning) {
       this.props.startScanning('Kontakt')
-    }
-    else {
+    } else {
       this.props.stopScanning('Kontakt')
     }
   }
 
   registerAttendance (classId) {
-    const lecture = _.filter(this.state.registeredClasses, c =>
-      c.id === classId)
-    
+    const lecture = _.filter(this.state.registeredClasses, c => {
+      return c.id === classId
+    })
     if (lecture.length > 0) {
       this.props.registerAttendance(lecture[0])
       this.setState(prevState => ({
@@ -114,15 +111,15 @@ class AttendableScreen extends Component {
       return null
     }
 
-    const distance = item.distance ? item.distance.toFixed(2) : 'NA';
+    const distance = item.distance ? item.distance.toFixed(2) : 'NA'
     const backgroundColor = item.isAttending ? COLOR.lightGreen500 : COLOR.blueGrey200
 
     return (
       <ListItem
         divider
         leftElement={
-          <Avatar 
-            text={<Icon name='business' size={20}/>}
+          <Avatar
+            text={<Icon name='business' size={20} />}
             size={40}
             style={{container: {backgroundColor: backgroundColor}}} />
         }
@@ -140,7 +137,7 @@ class AttendableScreen extends Component {
   }
 
   render () {
-    const buttonText = this.props.isScanning ? "Stop" : "Scan"
+    const buttonText = this.props.isScanning ? 'Stop' : 'Scan'
     return (
       <View style={styles.mainContainer}>
         <View>
@@ -149,7 +146,7 @@ class AttendableScreen extends Component {
             centerElement='Nearby classes'
             rightElement=''
             isSearchActive={false}
-            onLeftElementPress={() => this.props.navigation.navigate("DrawerOpen")}
+            onLeftElementPress={() => this.props.navigation.navigate('DrawerOpen')}
           />
         </View>
 
@@ -160,7 +157,7 @@ class AttendableScreen extends Component {
             <Button accent raised text={buttonText} onPress={this.toggleScan} />
             <Text style={styles.label}>Last scan: 2:01 PM</Text>
           </Card>
-          <Subheader text={ `Found (${this.state.classes.length})` } />
+          <Subheader text={`Found (${this.state.classes.length})`} />
           { this.state.classes.map((item) => this.renderRow(item)) }
         </ScrollView>
       </View>
