@@ -1,5 +1,6 @@
 import { StyleSheet } from 'react-native'
 import { ApplicationStyles, Metrics, Colors } from '../../Themes'
+import { COLOR } from 'react-native-material-ui'
 
 export default StyleSheet.create({
   ...ApplicationStyles.screen,
@@ -26,5 +27,18 @@ export default StyleSheet.create({
     top: 20,
     right: 20,
     zIndex: 2
+  }
+})
+
+export const listItemStyles = StyleSheet.create({
+  secondaryText: {
+    lineHeight: 16,
+    fontSize: 12,
+    color: COLOR.cyan500
+  },
+  tertiaryText: {
+    lineHeight: 16,
+    fontSize: 12,
+    color: COLOR.cyan500
   }
 })

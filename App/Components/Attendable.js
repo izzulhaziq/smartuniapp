@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import { View, Text } from 'react-native'
 import styles from './Styles/AttendableStyle'
 import BeaconBase from '../Components/BeaconBase'
-import { Card } from 'react-native-material-ui'
+import { Card, Divider } from 'react-native-material-ui'
 
 export default class Attendable extends Component {
   state = {
@@ -58,8 +58,9 @@ export default class Attendable extends Component {
   render () {
     return (
       <View>
-        <Card>
+        <Card fullWidth={false}>
           <Text style={styles.boldLabel}>{this.props.data.title}</Text>
+          <Divider />
           <Text style={styles.label}>{this.props.data.description}</Text>
           <Text style={styles.label}>Checked in: {this.state.hasCheckedIn ? 'Yes' : 'No'}</Text>
           <Text style={styles.label}>Checked out: {this.state.hasCheckedOut ? 'Yes' : 'No'}</Text>

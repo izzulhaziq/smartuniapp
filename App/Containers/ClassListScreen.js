@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
-import { View, Text, ListView, FlatList } from 'react-native'
+import { View, Text, ListView, FlatList, ScrollView } from 'react-native'
 import { connect } from 'react-redux'
-import Attendable from '../Components/Attendable'
+import ClassInfo from '../Components/ClassInfo'
+import { Toolbar, Subheader } from 'react-native-material-ui'
 
 // For empty lists
 // import AlertMessage from '../Components/AlertMessage'
@@ -10,7 +11,7 @@ import Attendable from '../Components/Attendable'
 import styles from './Styles/ClassListScreenStyle'
 
 class ClassListScreen extends Component {
-  state: {
+  static state: {
     dataSource: Object
   }
 
@@ -24,13 +25,37 @@ class ClassListScreen extends Component {
     const dataObjects = [
       {
         key: 1,
-        title: 'React 101',
-        description: 'Learn the basic of building react app',
-        time: '8:00 AM',
-        uuid: 'f7826da6-4fa2-4e98-8024-bc5b71e0893e'
+        name: 'React 103',
+        lecturer: 'Dr. Michelle Wong',
+        attendance: [5, 5]
       },
-      {key: 2, title: 'Golang 101', description: 'Learn the fun of Golang', time: '9:00 AM'},
-      {key: 3, title: 'Microservices 101', description: 'Learn how to build your 1st microservice', time: '2:00 PM'}
+      {
+        key: 2,
+        name: 'Golang 101',
+        lecturer: 'Dr Fahmi Adam',
+        attendance: [3, 5]
+      },
+      {
+        key: 3,
+        name: 'Microservices 101',
+        lecturer: 'Dr Pham Kung King',
+        attendance: [4, 5]
+      }
+    ]
+
+    const electives = [
+      {
+        key: 1,
+        name: 'Accounting',
+        lecturer: 'Dr. Anjana Vakil',
+        attendance: [1, 5]
+      },
+      {
+        key: 2,
+        name: 'Human & Resources',
+        lecturer: 'Dr Khalessi',
+        attendance: [5, 5]
+      }
     ]
 
     /* ***********************************************************
@@ -47,7 +72,8 @@ class ClassListScreen extends Component {
     // Datasource is always in state
     this.state = {
       dataSource: ds.cloneWithRows(dataObjects),
-      dataObjects: dataObjects
+      dataObjects: dataObjects,
+      electives: electives
     }
   }
 
@@ -61,18 +87,7 @@ class ClassListScreen extends Component {
   *************************************************************/
   renderRow = ({item}) => {
     return (
-      /**
-      <View style={styles.row}>
-        <Text style={styles.boldLabel}>{rowData.title} ({rowData.time})</Text>
-        <Text style={styles.label}>{rowData.description}</Text>
-        { rowData.uuid &&
-          <BeaconBase
-            uuid={rowData.uuid}
-            identifier='smartuni'
-            onEnter={this.onEnter}/> }
-      </View>
-       */
-      <Attendable data={item} />
+      <ClassInfo data={item} />
     )
   }
 
@@ -109,26 +124,38 @@ class ClassListScreen extends Component {
 
   render () {
     return (
-      /**
-      <View style={styles.container}>
-          <ListView
-          contentContainerStyle={styles.listContent}
-          dataSource={this.state.dataSource}
-          renderRow={this.renderRow}
-          renderFooter={this.renderFooter}
-          enableEmptySections
-          pageSize={15}
-        />
-       */
-      <View>
-        <FlatList
-          ref='scheduleList'
-          data={this.state.dataObjects}
-          extraData={this.props}
-          renderItem={this.renderRow}
-          contentContainerStyle={styles.listContent}
-          showsVerticalScrollIndicator={false}
-        />
+      <View style={styles.mainContainer}>
+          <View>
+            <Toolbar
+              leftElement={'menu'}
+              centerElement='Classes registered'
+              rightElement=''
+              isSearchActive={false}
+              onLeftElementPress={() => this.props.navigation.navigate("DrawerOpen")}
+            />
+          </View>
+        <ScrollView style={styles.container}>
+          <Subheader text="Mandatory" />
+          <View>
+            <FlatList
+              ref='scheduleList'
+              data={this.state.dataObjects}
+              extraData={this.props}
+              renderItem={this.renderRow}
+              showsVerticalScrollIndicator={false}
+            />
+          </View>
+          <Subheader text="Electives" />
+          <View>
+            <FlatList
+              ref='electives'
+              data={this.state.electives}
+              extraData={this.props}
+              renderItem={this.renderRow}
+              showsVerticalScrollIndicator={false}
+            />
+          </View>
+        </ScrollView>
       </View>
     )
   }

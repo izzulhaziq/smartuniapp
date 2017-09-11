@@ -5,18 +5,48 @@ import { Provider } from 'react-redux'
 import RootContainer from './RootContainer'
 import createStore from '../Redux'
 import { COLOR, ThemeProvider } from 'react-native-material-ui'
+import Color from 'color'
 
 // create our store
 const store = createStore()
 
 const uiTheme = {
   palette: {
-    primaryColor: COLOR.lightBlue800,
+    // main theme colors
+    primaryColor: COLOR.blueGrey900,
     accentColor: COLOR.pink500,
+    // text color palette
+    primaryTextColor: Color(COLOR.black).alpha(.87).toString(),
+    secondaryTextColor: Color(COLOR.black).alpha(.54).toString(),
+    alternateTextColor: COLOR.white,
+    // backgournds and borders
+    canvasColor: COLOR.white,
+    borderColor: Color(COLOR.black).alpha(.12).toString(),
+    // https://material.google.com/style/color.html#color-text-background-colors
+    disabledColor: Color(COLOR.black).alpha(.38).toString(),
+    disabledTextColor: Color(COLOR.black).alpha(.26).toString(),
+    activeIcon: Color(COLOR.black).alpha(.54).toString(),
+    inactiveIcon: Color(COLOR.black).alpha(.38).toString(),
+    // pickerHeaderColor: cyan500,
+    // clockCircleColor: faintBlack,
+    // shadowColor: fullBlack,
   },
   card: {
     container: {
-      padding: 10
+      padding: 10,
+    }
+  },
+  drawerHeader: {
+    contentContainer: {
+      backgroundColor: COLOR.blueGrey900
+    }
+  },
+  drawerHeaderListItem: {
+    primaryText: {
+      color: COLOR.white
+    },
+    secondaryText: {
+      color: COLOR.white
     }
   }
 }

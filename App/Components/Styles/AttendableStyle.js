@@ -18,8 +18,8 @@ export default StyleSheet.create({
     fontWeight: 'bold',
     alignSelf: 'center',
     color: Colors.charcoal,
-    textAlign: 'center',
-    marginBottom: Metrics.smallMargin
+    textAlign: 'left',
+    marginBottom: Metrics.baseMargin
   },
   label: {
     textAlign: 'left',

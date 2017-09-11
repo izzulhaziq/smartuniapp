@@ -1,22 +1,45 @@
-import { StackNavigator } from 'react-navigation'
+import React, { Component } from "react";
+import { StackNavigator, DrawerNavigator, TabNavigator } from 'react-navigation'
+import SettingsScreen from '../Containers/SettingsScreen'
+import AttendableScreen from '../Containers/AttendableScreen'
 import AttendanceHistoryScreen from '../Containers/AttendanceHistoryScreen'
 import ClassListScreen from '../Containers/ClassListScreen'
 import LaunchScreen from '../Containers/LaunchScreen'
+import SideBar from '../Components/SideBar'
 
 import styles from './Styles/NavigationStyles'
+import { COLOR } from 'react-native-material-ui'
 
 // Manifest of possible screens
-const PrimaryNav = StackNavigator({
-  AttendanceHistoryScreen: { screen: AttendanceHistoryScreen },
-  ClassListScreen: { screen: ClassListScreen },
-  LaunchScreen: { screen: LaunchScreen }
+const ClassListNav = StackNavigator({
+  Classes: { screen: ClassListScreen }
 }, {
   // Default config for all screens
   headerMode: 'none',
-  initialRouteName: 'LaunchScreen',
+  initialRouteName: 'Classes',
   navigationOptions: {
     headerStyle: styles.header
   }
+})
+
+const AttendanceTab = TabNavigator({
+  AttendableScreen: { screen: AttendableScreen },
+  AttendanceHistory: { screen: AttendanceHistoryScreen }
+}, {
+  tabBarPosition: 'bottom',
+  tabBarOptions: {
+    style: {
+      backgroundColor: COLOR.blueGrey900,
+    }
+  }
+})
+
+const PrimaryNav = DrawerNavigator({
+  Attendance: { screen: AttendanceTab },
+  Classes: { screen: ClassListNav },
+  Settings: { screen: SettingsScreen }
+}, {
+  contentComponent: props => <SideBar {...props} />
 })
 
 export default PrimaryNav

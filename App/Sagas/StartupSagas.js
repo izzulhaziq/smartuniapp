@@ -1,5 +1,5 @@
-import { put, select } from 'redux-saga/effects'
-import GithubActions from '../Redux/GithubRedux'
+import { put, select, call } from 'redux-saga/effects'
+import BeaconService from '../Services/BeaconService'
 import { is } from 'ramda'
 
 // exported to make available for tests
@@ -32,9 +32,10 @@ export function * startup (action) {
       }
     })
   }
-  const avatar = yield select(selectAvatar)
-  // only get if we don't have it yet
-  if (!is(String, avatar)) {
-    yield put(GithubActions.userRequest('GantMan'))
-  }
+  
+  yield call(BeaconService.connectKontakt)
+}
+
+export function * teardown () {
+  yield call(BeaconService.disconnectKontakt)
 }

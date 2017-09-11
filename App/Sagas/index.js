@@ -1,17 +1,16 @@
-import { takeLatest } from 'redux-saga/effects'
+import { takeLatest, takeEvery, call } from 'redux-saga/effects'
 import API from '../Services/Api'
 import FixtureAPI from '../Services/FixtureApi'
 import DebugConfig from '../Config/DebugConfig'
 
 /* ------------- Types ------------- */
 
-import { StartupTypes } from '../Redux/StartupRedux'
-import { GithubTypes } from '../Redux/GithubRedux'
+import { BeaconTypes } from '../Redux/BeaconRedux'
 
 /* ------------- Sagas ------------- */
 
-import { startup } from './StartupSagas'
-import { getUserAvatar } from './GithubSagas'
+import { beaconRanging, startRanging, stopRanging } from './BeaconSagas'
+import { startup, teardown } from './StartupSagas'
 
 /* ------------- API ------------- */
 
@@ -22,11 +21,11 @@ const api = DebugConfig.useFixtures ? FixtureAPI : API.create()
 /* ------------- Connect Types To Sagas ------------- */
 
 export default function * root () {
+  yield call(startup)
   yield [
-    // some sagas only receive an action
-    takeLatest(StartupTypes.STARTUP, startup),
-
-    // some sagas receive extra parameters in addition to an action
-    takeLatest(GithubTypes.USER_REQUEST, getUserAvatar, api)
+    takeLatest(BeaconTypes.BEACON_START_RANGING, startRanging),
+    takeLatest(BeaconTypes.BEACON_STOP_RANGING, stopRanging),
+    call(beaconRanging)
   ]
+  yield call(teardown)
 }
