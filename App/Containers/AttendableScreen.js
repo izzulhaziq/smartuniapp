@@ -3,17 +3,22 @@ import { ScrollView, Text, View } from 'react-native'
 import { connect } from 'react-redux'
 import BeaconActions from '../Redux/BeaconRedux'
 import AttendanceActions from '../Redux/AttendanceRedux'
-import { Toolbar, Subheader, ListItem, Card, Divider, Icon, Button, Avatar, COLOR } from 'react-native-material-ui'
+import { Container, Content, Footer, List, Body, Left } from 'native-base'
+import { Toolbar, Subheader, Card, ListItem, Divider, Icon, Button, Avatar, COLOR } from 'react-native-material-ui'
 import _ from 'lodash'
+import { find, sort, dropWhile } from 'ramda'
+import { isToday, isBefore, startOfHour, distanceInWords, isWithinRange } from 'date-fns'
+import Schedule from '../Components/Schedule'
 // Add Actions - replace 'Your' with whatever your reducer is called :)
 // import YourActions from '../Redux/YourRedux'
 
 // Styles
 import styles, { listItemStyles } from './Styles/AttendableScreenStyle'
+import { ApplicationStyles, Metrics, Colors, uiTheme } from '../Themes'
 
 class AttendableScreen extends Component {
   static navigationOptions = {
-    tabBarLabel: 'Nearby'
+    tabBarLabel: 'Check in'
   }
 
   constructor (props) {
@@ -28,7 +33,7 @@ class AttendableScreen extends Component {
         beaconId: '8F3a'
       },
       {
-        id: 1,
+        id: 2,
         name: 'Chemistry 101',
         location: 'Hall 05',
         time: '2:00 PM - 3:00 PM',
@@ -47,14 +52,31 @@ class AttendableScreen extends Component {
     this.registerAttendance = this.registerAttendance.bind(this)
     this.isAttending = this.isAttending.bind(this)
     this.mapBeaconsToClasses = this.mapBeaconsToClasses.bind(this)
+    this.getNextSchedule = this.getNextSchedule.bind(this)
   }
 
   componentWillReceiveProps (nextProps) {
-    const classes = this.mapBeaconsToClasses(nextProps.beacons, this.state.registeredClasses)
+    const classes = this.mapBeaconsToClasses(nextProps.beacons, this.props.schedules)
     this.setState({
       classes: nextProps.isScanning ? classes : [],
       attending: nextProps.attending
     })
+  }
+
+  getNextSchedule () {
+    const now = new Date()
+    const today = find((schedule) => isToday(schedule.date), this.props.schedules)
+
+    if (today) {
+      const sorted = sort((a, b) => a.dateFrom - b.dateFrom, today.schedules)
+      var next = dropWhile(
+        (s) => isBefore(new Date(s.dateFrom), now) && !isWithinRange(now, s.dateFrom, s.dateTo),
+        sorted)
+
+      return next ? next : undefined
+    } else {
+      return undefined
+    }
   }
 
   isAttending (lecture) {
@@ -118,10 +140,7 @@ class AttendableScreen extends Component {
       <ListItem
         divider
         leftElement={
-          <Avatar
-            text={<Icon name='business' size={20} />}
-            size={40}
-            style={{container: {backgroundColor: backgroundColor}}} />
+          <Icon name='business' size={40} style={{color: backgroundColor}} />
         }
         centerElement={{
           primaryText: item.name,
@@ -137,29 +156,79 @@ class AttendableScreen extends Component {
   }
 
   render () {
-    const buttonText = this.props.isScanning ? 'Stop' : 'Scan'
+    const buttonText = this.props.isScanning ? 'Disable scanner' : 'Enable scanner'
+    const { attending: activeLecture } = this.props
+    const nextSchedule = this.getNextSchedule()[0]
+    const timeLeft = activeLecture && this.props.activeScheduleProgress
+      ? distanceInWords(activeLecture.dateFrom, this.props.activeScheduleProgress.timestamp)
+      : undefined
+
     return (
       <View style={styles.mainContainer}>
         <View>
           <Toolbar
             leftElement={'menu'}
-            centerElement='Nearby classes'
+            centerElement='// Check in'
             rightElement=''
             isSearchActive={false}
             onLeftElementPress={() => this.props.navigation.navigate('DrawerOpen')}
           />
         </View>
 
-        <ScrollView style={styles.container}>
-          <Card fullWidth>
-            <Text style={styles.boldLabel}>Scanning status..</Text>
-            <Divider />
-            <Button accent raised text={buttonText} onPress={this.toggleScan} />
-            <Text style={styles.label}>Last scan: 2:01 PM</Text>
-          </Card>
-          <Subheader text={`Found (${this.state.classes.length})`} />
-          { this.state.classes.map((item) => this.renderRow(item)) }
-        </ScrollView>
+        <Container>
+          <Content>
+            <View style={{
+                  flex:1,
+                  flexDirection: 'row',
+                  justifyContent: 'flex-start',
+                  alignItems: 'flex-start',
+                  height:100,
+                  marginBottom: -40,
+                  paddingTop: 20,
+                  paddingLeft: 20,
+                  backgroundColor: uiTheme.palette.accentColor}} >
+              <Text style={{fontSize: 16, fontWeight: 'bold', color: uiTheme.palette.alternateTextColor}}> 
+                Find classes nearby
+              </Text>
+            </View>
+            <View style={{marginLeft: 10, marginRight: 10}}>
+              <Card fullWidth>
+                <View style={{flex:1, flexDirection:'row'}}>
+                  <Icon name='info' size={20} />
+                  <Text style={styles.boldLabel}>
+                     Ensure your bluetooth is turn on
+                  </Text>
+                </View>
+                <Divider />
+                <Button accent raised text={buttonText} onPress={this.toggleScan} />
+              </Card>
+              <Card fullWidth>
+                  { activeLecture &&
+                    <View>
+                      <Text style={styles.boldLabel}>Attending now</Text>
+                      <Divider />
+                      { <Schedule {...activeLecture } isAttendance={true} isActive={true} /> }
+                      { timeLeft &&
+                        <Text style={styles.scheduleProgress}>{timeLeft} left</Text>
+                      }
+                    </View>
+                  }
+                  { !activeLecture && !nextSchedule &&
+                    <View>
+                      <Text style={styles.boldLabel}>No more class for today. Yayy!</Text>
+                    </View>
+                  }
+                  { !activeLecture && nextSchedule &&
+                    <View>
+                      <Text style={styles.boldLabel}>Be ready for your next class</Text>
+                      <Divider />
+                      { <Schedule {...nextSchedule } isAttendance={true} /> }
+                    </View>
+                  }
+                </Card>
+            </View>
+          </Content>
+        </Container>
       </View>
     )
   }
@@ -169,7 +238,9 @@ const mapStateToProps = (state) => {
   return {
     isScanning: state.beacon.isScanning,
     beacons: state.beacon.beacons,
-    attending: state.attendance.attending
+    attending: state.attendance.attending,
+    schedules: state.schedule.data,
+    activeScheduleProgress: state.attendance.progress
   }
 }
 

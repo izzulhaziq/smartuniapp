@@ -2,13 +2,16 @@ import React, { Component } from 'react'
 import { View, Text, ListView, FlatList, ScrollView } from 'react-native'
 import { connect } from 'react-redux'
 import ClassInfo from '../Components/ClassInfo'
-import { Toolbar, Subheader } from 'react-native-material-ui'
+import { Toolbar, Subheader, Divider, COLOR, Card, Avatar } from 'react-native-material-ui'
+import { Container, Content, Footer, List, ListItem, Body, Left } from 'native-base'
+import Color from 'color'
 
 // For empty lists
 // import AlertMessage from '../Components/AlertMessage'
 
 // Styles
 import styles from './Styles/ClassListScreenStyle'
+import { ApplicationStyles, Metrics, Colors, uiTheme } from '../Themes'
 
 class ClassListScreen extends Component {
   static state: {
@@ -86,8 +89,44 @@ class ClassListScreen extends Component {
     return <MyCustomCell title={rowData.title} description={rowData.description} />
   *************************************************************/
   renderRow = ({item}) => {
-    return (
+    /*return (
       <ClassInfo data={item} />
+    )*/
+    if (!item) {
+      return null
+    }
+    const classMissedLimit = 3
+    const acceptableMissRate = 0.7
+    const { attendance } = item
+    const colorPallette = {
+      ok: Color(COLOR.lightGreen300).alpha(1.0).toString(),
+      warning: Color(COLOR.amber300).alpha(1.0).toString(),
+      danger: Color(COLOR.red300).alpha(1.0).toString()
+    }
+
+    const missedRate = ((attendance[1] - attendance[0]) / classMissedLimit).toFixed(1)
+    let status = colorPallette.danger
+    if (missedRate >= acceptableMissRate && missedRate < 1) {
+      status = colorPallette.warning
+    } else if (missedRate >= 1) {
+      status = colorPallette.danger
+    } else {
+      status = colorPallette.ok
+    }
+
+    const text = (attendance[0] / attendance[1] * 100) + '%'
+    return (
+      <ListItem avatar>
+        <Left>
+          <View style={{marginLeft: 0, paddingLeft: 0, paddingTop: 10}}>
+            <Avatar text={text} size={50} style={{container: {backgroundColor: status}}} />
+          </View>
+        </Left>
+        <Body>
+          <Text>{item.name}</Text>
+          <Text note>{item.lecturer}</Text>
+        </Body>
+      </ListItem>
     )
   }
 
@@ -128,34 +167,56 @@ class ClassListScreen extends Component {
           <View>
             <Toolbar
               leftElement={'menu'}
-              centerElement='Classes registered'
+              centerElement='// Classes'
               rightElement=''
               isSearchActive={false}
               onLeftElementPress={() => this.props.navigation.navigate("DrawerOpen")}
             />
           </View>
-        <ScrollView style={styles.container}>
-          <Subheader text="Mandatory" />
-          <View>
-            <FlatList
-              ref='scheduleList'
-              data={this.state.dataObjects}
-              extraData={this.props}
-              renderItem={this.renderRow}
-              showsVerticalScrollIndicator={false}
-            />
-          </View>
-          <Subheader text="Electives" />
-          <View>
-            <FlatList
-              ref='electives'
-              data={this.state.electives}
-              extraData={this.props}
-              renderItem={this.renderRow}
-              showsVerticalScrollIndicator={false}
-            />
-          </View>
-        </ScrollView>
+          <Container>
+            <Content>
+              <View style={{
+                    flex:1,
+                    flexDirection: 'row',
+                    justifyContent: 'flex-start',
+                    alignItems: 'flex-start',
+                    height:100,
+                    marginBottom: -40,
+                    paddingTop: 20,
+                    paddingLeft: 20,
+                    backgroundColor: uiTheme.palette.accentColor}} >
+                <Text style={{fontSize: 16, fontWeight: 'bold', color: uiTheme.palette.alternateTextColor}}> 
+                  Your classes this semester
+                </Text>
+              </View>
+              <View style={{marginLeft: 10, marginRight: 10}}>
+                <Card fullWidth style={{ container: { padding: 0 }}}>
+                  <List>
+                    <ListItem itemDivider>
+                      <Text>Mandatory</Text>
+                    </ListItem> 
+                    <FlatList
+                      ref='scheduleList'
+                      data={this.state.dataObjects}
+                      extraData={this.props}
+                      renderItem={this.renderRow}
+                      showsVerticalScrollIndicator={false}
+                    />
+                    <ListItem itemDivider>
+                      <Text>Electives</Text>
+                    </ListItem> 
+                    <FlatList
+                      ref='electives'
+                      data={this.state.electives}
+                      extraData={this.props}
+                      renderItem={this.renderRow}
+                      showsVerticalScrollIndicator={false}
+                    />
+                  </List>
+                </Card>
+              </View>
+            </Content>
+          </Container>
       </View>
     )
   }

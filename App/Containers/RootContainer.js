@@ -4,9 +4,11 @@ import ReduxNavigation from '../Navigation/ReduxNavigation'
 import { connect } from 'react-redux'
 import StartupActions from '../Redux/StartupRedux'
 import ReduxPersist from '../Config/ReduxPersist'
+import { Root } from "native-base";
 
 // Styles
 import styles from './Styles/RootContainerStyles'
+import { ApplicationStyles, Metrics, Colors, uiTheme } from '../Themes'
 
 class RootContainer extends Component {
   componentDidMount () {
@@ -18,10 +20,12 @@ class RootContainer extends Component {
 
   render () {
     return (
+      <Root>
       <View style={styles.applicationView}>
-        <StatusBar barStyle='light-content' />
+        <StatusBar backgroundColor={uiTheme.palette.darkPrimaryColor} barStyle='light-content' />
         <ReduxNavigation />
       </View>
+      </Root>
     )
   }
 }

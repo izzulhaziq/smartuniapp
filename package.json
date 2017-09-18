@@ -26,6 +26,7 @@
   },
   "dependencies": {
     "apisauce": "^0.14.0",
+    "date-fns": "^1.28.5",
     "flow-bin": "^0.53.1",
     "format-json": "^1.0.3",
     "lodash": "^4.17.2",

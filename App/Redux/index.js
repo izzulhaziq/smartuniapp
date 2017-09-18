@@ -10,7 +10,8 @@ export default () => {
     search: require('./SearchRedux').reducer,
     beacon: require('./BeaconRedux').reducer,
     attendance: require('./AttendanceRedux').reducer,
-    login: require('./LoginRedux').reducer
+    login: require('./LoginRedux').reducer,
+    schedule: require('./ScheduleRedux').reducer
   })
 
   return configureStore(rootReducer, rootSaga)

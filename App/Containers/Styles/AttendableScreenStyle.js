@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native'
-import { ApplicationStyles, Metrics, Colors } from '../../Themes'
+import { ApplicationStyles, Metrics, Colors, uiTheme } from '../../Themes'
 import { COLOR } from 'react-native-material-ui'
 
 export default StyleSheet.create({
@@ -13,6 +13,11 @@ export default StyleSheet.create({
     color: Colors.charcoal,
     textAlign: 'left',
     marginBottom: Metrics.baseMargin
+  },
+  scheduleProgress: {
+    textAlign: 'left',
+    color: uiTheme.palette.secondaryTextColor,
+    //marginTop: -Metrics.baseMargin
   },
   label: {
     textAlign: 'left',

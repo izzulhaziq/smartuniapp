@@ -1,4 +1,9 @@
+import { COLOR } from 'react-native-material-ui'
+import Color from 'color'
+
 const colors = {
+  primaryColor: Color(COLOR.blueGrey900).alpha(0.70).toString(),
+  accentColor: Color(COLOR.pinkA700).alpha(0.70).toString(),
   background: '#FFFFFF',
   clear: 'rgba(0,0,0,0)',
   facebook: '#3b5998',

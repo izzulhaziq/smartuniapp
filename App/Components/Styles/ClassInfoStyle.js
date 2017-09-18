@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native'
-import { ApplicationStyles, Metrics, Colors } from '../../Themes'
+import { ApplicationStyles, Metrics, Colors, uiTheme } from '../../Themes'
 
 export default StyleSheet.create({
   ...ApplicationStyles.screen,
@@ -8,6 +8,9 @@ export default StyleSheet.create({
     flexDirection: 'row',
     paddingTop: Metrics.baseMargin,
     paddingBottom: Metrics.baseMargin
+  },
+  cardHeader: {
+    backgroundColor: uiTheme.palette.accentColor
   },
   row: {
     flex: 1,
@@ -19,9 +22,10 @@ export default StyleSheet.create({
   },
   boldLabel: {
     fontWeight: 'bold',
+    fontSize: 16,
     color: Colors.charcoal,
     textAlign: 'left',
-    marginBottom: Metrics.baseMargin
+    marginBottom: Metrics.smallMargin
   },
   label: {
     textAlign: 'left',
@@ -32,17 +36,17 @@ export default StyleSheet.create({
     alignSelf: 'flex-end',
 
     position: 'absolute',
-    top: 20,
+    top: 25,
     right: 20,
-    zIndex: 2
+    zIndex: 3
   },
   statusBackground: {
     flex: 1,
     alignSelf: 'flex-end',
 
     position: 'absolute',
-    top: 15,
+    top: 20,
     right: 15,
-    zIndex: 2
+    zIndex: 3
   }
 })

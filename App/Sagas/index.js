@@ -7,12 +7,16 @@ import DebugConfig from '../Config/DebugConfig'
 
 import { BeaconTypes } from '../Redux/BeaconRedux'
 import { LoginTypes } from '../Redux/LoginRedux'
+import { ScheduleTypes } from '../Redux/ScheduleRedux'
+import { AttendanceTypes } from '../Redux/AttendanceRedux'
 
 /* ------------- Sagas ------------- */
 
 import { beaconRanging, startRanging, stopRanging } from './BeaconSagas'
 import { startup, teardown } from './StartupSagas'
 import { login, logout } from './LoginSagas'
+import { syncSchedule } from './ScheduleSagas'
+import { watchOnArrived, watchBeaconForArrival, watchOnAttending } from './AttendanceSagas'
 
 /* ------------- API ------------- */
 
@@ -29,6 +33,10 @@ export default function * root () {
     takeLatest(BeaconTypes.BEACON_STOP_RANGING, stopRanging),
     takeLatest(LoginTypes.LOGIN_REQUEST, login, api),
     takeLatest(LoginTypes.LOGOUT_REQUEST, logout),
+    takeLatest(ScheduleTypes.SCHEDULE_SYNC_REQUEST, syncSchedule, api),
+    takeEvery(BeaconTypes.BEACON_UPDATED, watchBeaconForArrival),
+    takeEvery(AttendanceTypes.ATTENDANCE_ARRIVED, watchOnArrived),
+    takeLatest(AttendanceTypes.ATTENDANCE_REGISTER, watchOnAttending),
     call(beaconRanging)
   ]
   yield call(teardown)

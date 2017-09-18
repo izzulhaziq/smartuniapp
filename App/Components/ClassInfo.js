@@ -1,8 +1,11 @@
 import React, { Component } from 'react'
 // import PropTypes from 'prop-types';
-import { View, Text } from 'react-native'
+import { View } from 'react-native'
 import styles from './Styles/ClassInfoStyle'
-import { Card, Divider, Icon, Avatar, COLOR } from 'react-native-material-ui'
+import { Divider, Icon, Avatar, COLOR } from 'react-native-material-ui'
+import Color from 'color'
+import { Container, Content, Card, CardItem, Text, Body } from 'native-base'
+import { ApplicationStyles, Metrics, Colors, uiTheme } from '../Themes'
 
 export default class ClassInfo extends Component {
   // // Prop type warnings
@@ -21,9 +24,9 @@ export default class ClassInfo extends Component {
     const acceptableMissRate = 0.7
     const { attendance } = this.props.data
     const colorPallette = {
-      ok: COLOR.lightGreen700,
-      warning: COLOR.amber700,
-      danger: COLOR.red700
+      ok: Color(COLOR.lightGreen300).alpha(1.0).toString(),
+      warning: Color(COLOR.amber300).alpha(1.0).toString(),
+      danger: Color(COLOR.red300).alpha(1.0).toString()
     }
 
     const missedRate = ((attendance[1] - attendance[0]) / classMissedLimit).toFixed(1)
@@ -39,22 +42,29 @@ export default class ClassInfo extends Component {
     const text = (attendance[0] / attendance[1] * 100) + '%'
 
     return (
-      <View>
-        <Card fullWidth={false}>
-          <Text style={styles.boldLabel}>{this.props.data.name}</Text>
-
+      <View style={{flex: 1}}>
+          <Card>
           <View style={styles.statusBackground}>
             <Avatar text={text} size={65} style={{container: {backgroundColor: status}}} />
           </View>
           <View style={styles.status}>
             <Avatar text={text} size={55} style={{container: {backgroundColor: COLOR.blueGrey900}}} />
           </View>
-          <Divider />
-          <View style={styles.container}>
-            <Icon name='person' size={22} />
-            <Text style={styles.label}> {this.props.data.lecturer}</Text>
-          </View>
-        </Card>
+            <CardItem header style={{backgroundColor: '#fff'}}>
+              <Body>
+                <Divider />
+                <Text style={{color: uiTheme.palette.alternateTextColor}} >{this.props.data.name}</Text>
+              </Body>
+            </CardItem>
+            <CardItem>
+              <Body>
+                <View style={styles.container}>
+                  <Icon name='person' size={22} />
+                  <Text style={styles.label}> {this.props.data.lecturer}</Text>
+                </View>
+              </Body>
+            </CardItem>
+          </Card>
       </View>
     )
   }

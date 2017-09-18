@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Avatar, Drawer } from 'react-native-material-ui'
+import { Avatar, Drawer, COLOR } from 'react-native-material-ui'
 
 class SideBar extends Component {
   render () {
@@ -21,7 +21,7 @@ class SideBar extends Component {
         </Drawer.Header>
 
         { !this.props.hasLoggedIn &&
-          <Drawer.Section
+          <Drawer.Section style={{color: COLOR.pink200}}
             items={[
               { 
                 icon: 'warning',
@@ -35,6 +35,12 @@ class SideBar extends Component {
           <Drawer.Section
             divider
             items={[
+              {
+                icon: 'home',
+                value: 'Home',
+                onPress: () => this.props.navigation.navigate('Home'),
+                active: state.routeName === 'Home'
+              },
               {
                 icon: 'history',
                 value: 'Attendance',

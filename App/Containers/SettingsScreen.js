@@ -1,13 +1,15 @@
 import React, { Component } from 'react'
 import { ScrollView, Text, KeyboardAvoidingView, View } from 'react-native'
 import { connect } from 'react-redux'
-import { Toolbar, Subheader, ListItem, Card, Divider, Icon, Button, Avatar } from 'react-native-material-ui'
+import { Toolbar, Subheader, Card, Divider, Icon, Button, Avatar, COLOR } from 'react-native-material-ui'
+import { Container, Content, Footer, List, ListItem, Body, Left } from 'native-base'
 import LoginActions from '../Redux/LoginRedux'
 // Add Actions - replace 'Your' with whatever your reducer is called :)
 // import YourActions from '../Redux/YourRedux'
 
 // Styles
 import styles from './Styles/SettingsScreenStyle'
+import { ApplicationStyles, Metrics, Colors, uiTheme } from '../Themes'
 
 class SettingsScreen extends Component {
   constructor (props) {
@@ -42,24 +44,40 @@ class SettingsScreen extends Component {
           <View>
             <Toolbar
               leftElement={'menu'}
-              centerElement='Settings'
+              centerElement='// Settings'
               rightElement=''
               isSearchActive={false}
               onLeftElementPress={() => this.props.navigation.navigate("DrawerOpen")}
             />
           </View>
-        <ScrollView style={styles.container}>
-          <View>
-            <Subheader text={'Account'} />
-            <Card fullWidth>
-                <Text style={styles.boldLabel}>{ this.props.username }</Text>
-                <Divider />
-                <View style={styles.cardContainer}>
-                  <Button accent raised text={buttonText} onPress={this.logout} disabled={this.state.isLoggingOut}/>
-                </View>
-            </Card>
-          </View>
-        </ScrollView>
+        <Container>
+            <Content>
+              <View style={{
+                    flex:1,
+                    flexDirection: 'row',
+                    justifyContent: 'flex-start',
+                    alignItems: 'flex-start',
+                    height:100,
+                    marginBottom: -40,
+                    paddingTop: 20,
+                    paddingLeft: 20,
+                    backgroundColor: uiTheme.palette.accentColor}} >
+                <Text style={{fontSize: 16, fontWeight: 'bold', color: uiTheme.palette.alternateTextColor}}> 
+                  Manage account & settings
+                </Text>
+              </View>
+              <View style={{marginLeft: 10, marginRight: 10}}>
+                <Card fullWidth>
+                  <Subheader text='Account' />
+                  <Text style={styles.boldLabel}>{ this.props.username }</Text>
+                  <Divider />
+                  <View style={styles.cardContainer}>
+                    <Button accent raised text={buttonText} onPress={this.logout} disabled={this.state.isLoggingOut}/>
+                  </View>
+                </Card>
+              </View>
+            </Content>
+          </Container>
       </View>
     )
   }

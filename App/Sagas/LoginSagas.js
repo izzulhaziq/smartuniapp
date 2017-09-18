@@ -20,12 +20,10 @@ export function * login (api, action) {
 
 export function * logout () {
   // TODO: Call to delete JWT
-  console.log('logout saga')
   var success = true;
   yield delay(2000)
 
   if (success) {
-    console.log('logout saga ducces')
     yield put(LoginActions.logoutSuccess())
   } else {
     yield put(LoginActions.logoutFailure())

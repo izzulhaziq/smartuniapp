@@ -10,7 +10,7 @@ export default StyleSheet.create({
   boldLabel: {
     fontWeight: 'bold',
     color: Colors.charcoal,
-    textAlign: 'left',
+    textAlign: 'center',
     marginBottom: Metrics.baseMargin
   },
   cardContainer: {
