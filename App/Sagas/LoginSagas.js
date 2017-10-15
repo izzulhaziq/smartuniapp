@@ -6,13 +6,13 @@ export function * login (api, action) {
   const { username, password } = action
   // make the call to the api
   const response = yield call(api.login, username, password)
-  yield delay(2000)
-
+  //yield delay(2000)
+  
   // success?
   if (response.ok) {
     // You might need to change the response here - do this with a 'transform',
     // located in ../Transforms/. Otherwise, just pass the data back from the api.
-    yield put(LoginActions.loginSuccess(response.data))
+    yield put(LoginActions.loginSuccess(response.data.data.token))
   } else {
     yield put(LoginActions.loginFailure())
   }

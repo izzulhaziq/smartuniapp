@@ -16,6 +16,7 @@ export default StyleSheet.create({
   },
   scheduleProgress: {
     textAlign: 'left',
+    fontSize: 13,
     color: uiTheme.palette.secondaryTextColor,
     //marginTop: -Metrics.baseMargin
   },

@@ -9,6 +9,7 @@ import _ from 'lodash'
 import { find, sort, dropWhile } from 'ramda'
 import { isToday, isBefore, startOfHour, distanceInWords, isWithinRange } from 'date-fns'
 import Schedule from '../Components/Schedule'
+import { nextSchedule } from '../Services/ScheduleService'
 // Add Actions - replace 'Your' with whatever your reducer is called :)
 // import YourActions from '../Redux/YourRedux'
 
@@ -24,26 +25,8 @@ class AttendableScreen extends Component {
   constructor (props) {
     super(props)
 
-    const classes = [
-      {
-        id: 1,
-        name: 'React 103',
-        location: 'Hall 04',
-        time: '2:00 PM - 3:00 PM',
-        beaconId: '8F3a'
-      },
-      {
-        id: 2,
-        name: 'Chemistry 101',
-        location: 'Hall 05',
-        time: '2:00 PM - 3:00 PM',
-        beaconId: '8F3b'
-      }
-    ]
-
     this.state = {
       isScanning: props.isScanning,
-      registeredClasses: classes,
       classes: [],
       attending: props.attending
     }
@@ -64,19 +47,7 @@ class AttendableScreen extends Component {
   }
 
   getNextSchedule () {
-    const now = new Date()
-    const today = find((schedule) => isToday(schedule.date), this.props.schedules)
-
-    if (today) {
-      const sorted = sort((a, b) => a.dateFrom - b.dateFrom, today.schedules)
-      var next = dropWhile(
-        (s) => isBefore(new Date(s.dateFrom), now) && !isWithinRange(now, s.dateFrom, s.dateTo),
-        sorted)
-
-      return next ? next : undefined
-    } else {
-      return undefined
-    }
+    return nextSchedule(this.props.schedules, new Date())
   }
 
   isAttending (lecture) {
@@ -157,10 +128,9 @@ class AttendableScreen extends Component {
 
   render () {
     const buttonText = this.props.isScanning ? 'Disable scanner' : 'Enable scanner'
-    const { attending: activeLecture } = this.props
-    const nextSchedule = this.getNextSchedule()[0]
+    const { attending: activeLecture, nextSchedule } = this.props
     const timeLeft = activeLecture && this.props.activeScheduleProgress
-      ? distanceInWords(activeLecture.dateFrom, this.props.activeScheduleProgress.timestamp)
+      ? distanceInWords(this.props.activeScheduleProgress.timestamp, activeLecture.dateTo)
       : undefined
 
     return (
@@ -240,7 +210,8 @@ const mapStateToProps = (state) => {
     beacons: state.beacon.beacons,
     attending: state.attendance.attending,
     schedules: state.schedule.data,
-    activeScheduleProgress: state.attendance.progress
+    activeScheduleProgress: state.attendance.progress,
+    nextSchedule: state.attendance.next
   }
 }
 

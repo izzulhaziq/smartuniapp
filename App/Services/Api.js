@@ -1,8 +1,12 @@
 // a library to wrap and simplify api calls
 import apisauce from 'apisauce'
+import { addMinutes } from 'date-fns'
+function mockSchedule(name, location, dateFrom, dateTo) {
+  return { id: name, name, location, dateFrom, dateTo, beaconId: '8F3a' }
+}
 
 // our "constructor"
-const create = (baseURL = 'https://api.github.com/') => {
+const create = (baseURL = 'https://univercity.proxlabs.io/api/') => {
   // ------
   // STEP 1
   // ------
@@ -14,7 +18,9 @@ const create = (baseURL = 'https://api.github.com/') => {
     baseURL,
     // here are some default headers
     headers: {
-      'Cache-Control': 'no-cache'
+      'Cache-Control': 'no-cache',
+      'Accept': 'application/json',
+      'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxY2QzZDI0Zi1mNDJjLTRiOWMtYjBlMy00OTM5MTBjNDA2MDgiLCJleHAiOjE1MDg2NDk4MDh9.9L7Jes8tdGnNZFv_OfxKYFRkleU0l67TZrQZxKAWgIo'
     },
     // 10 second timeout...
     timeout: 10000
@@ -37,7 +43,13 @@ const create = (baseURL = 'https://api.github.com/') => {
   const getRoot = () => api.get('')
   const getRate = () => api.get('rate_limit')
   const getUser = (username) => api.get('search/users', {q: username})
+  const login = (username, password) => {
+    return api.post('token', { username, password })
+  }
 
+  const syncSchedule = (dateFrom, dateTo) => {
+    return api.get('profiles/full.json')
+  }
   // ------
   // STEP 3
   // ------
@@ -54,7 +66,9 @@ const create = (baseURL = 'https://api.github.com/') => {
     // a list of the API functions from step 2
     getRoot,
     getRate,
-    getUser
+    getUser,
+    login,
+    syncSchedule
   }
 }
 

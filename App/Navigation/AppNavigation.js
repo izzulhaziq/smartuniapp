@@ -41,10 +41,10 @@ const AttendanceTab = TabNavigator({
       backgroundColor: COLOR.blueGrey100
     },
     labelStyle: {
-      color: uiTheme.palette.darkPrimaryColor
+      color: uiTheme.palette.accentColor
     },
     indicatorStyle: {
-      backgroundColor: uiTheme.palette.darkPrimaryColor
+      backgroundColor: uiTheme.palette.accentColor
     }
   }
 })

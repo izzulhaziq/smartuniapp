@@ -6,6 +6,7 @@ import { Container, Content, Footer, Body, Left, Spinner } from 'native-base'
 import Schedule from '../Components/Schedule'
 import ScheduleActions from '../Redux/ScheduleRedux'
 import format from 'date-fns/format'
+import { todaySchedule } from '../Services/ScheduleService'
 
 // Styles
 import styles, { listItemStyles } from './Styles/HomeScreenStyle'
@@ -20,6 +21,7 @@ class HomeScreen extends Component {
     super(props)
 
     this.syncSchedule = this.syncSchedule.bind(this)
+    this.renderToday = this.renderToday.bind(this)
   }
 
   componentWillMount () {
@@ -30,25 +32,15 @@ class HomeScreen extends Component {
     this.props.syncSchedule(new Date())
   }
 
+  renderToday () {
+    const today = todaySchedule(this.props.data)
+    return this.renderSchedule(today)
+  }
+
   renderSchedule (day) {
     return day.schedules.map((item) => {
       return (
         <Schedule {...item} />
-        /*<ListItem
-          divider
-          leftElement={
-            <Icon name='business' size={40} style={{color: uiTheme.palette.complimentaryColor}}/>
-          }
-          centerElement={{
-            primaryText: item.name,
-            secondaryText: item.location,
-            tertiaryText: `${timeFrom} - ${timeTo}`
-          }}
-          rightElement={null}
-          numberOfLines={3}
-          style={listItemStyles}
-        />
-        */
       )
     })
   }
@@ -89,7 +81,7 @@ class HomeScreen extends Component {
                     { this.props.synching && 
                       <Spinner color='blue' /> }
                     { !this.props.synching && this.props.success &&
-                      this.props.data.map((item) => this.renderSchedule(item)) }
+                      this.renderToday() }
                   </View>
                 </Card>
               </View>

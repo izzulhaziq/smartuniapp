@@ -1,4 +1,4 @@
-import { takeLatest, takeEvery, call } from 'redux-saga/effects'
+import { takeLatest, takeEvery, call, fork } from 'redux-saga/effects'
 import API from '../Services/Api'
 import FixtureAPI from '../Services/FixtureApi'
 import DebugConfig from '../Config/DebugConfig'
@@ -16,7 +16,7 @@ import { beaconRanging, startRanging, stopRanging } from './BeaconSagas'
 import { startup, teardown } from './StartupSagas'
 import { login, logout } from './LoginSagas'
 import { syncSchedule } from './ScheduleSagas'
-import { watchOnArrived, watchBeaconForArrival, watchOnAttending } from './AttendanceSagas'
+import { watchOnArrived, watchBeaconForArrival, watchOnAttending, watchNextSchedule } from './AttendanceSagas'
 
 /* ------------- API ------------- */
 
@@ -37,6 +37,7 @@ export default function * root () {
     takeEvery(BeaconTypes.BEACON_UPDATED, watchBeaconForArrival),
     takeEvery(AttendanceTypes.ATTENDANCE_ARRIVED, watchOnArrived),
     takeLatest(AttendanceTypes.ATTENDANCE_REGISTER, watchOnAttending),
+    fork(watchNextSchedule),
     call(beaconRanging)
   ]
   yield call(teardown)

@@ -8,7 +8,9 @@ const { Types, Creators } = createActions({
   attendanceArrived: ['schedule'],
   attendanceRegister: ['lecture'],
   attendanceFinished: ['lecture'],
-  attendanceProgress: ['status']
+  attendanceProgress: ['status'],
+  attendanceNext: ['schedule'],
+  attendanceMissed: ['schedule']
 })
 
 export const AttendanceTypes = Types
@@ -21,7 +23,8 @@ export const INITIAL_STATE = Immutable({
   attending: null,
   recents: [],
   arrived: null,
-  progress: null
+  progress: null,
+  next: null
 })
 
 /* ------------- Reducers ------------- */
@@ -30,7 +33,7 @@ export const INITIAL_STATE = Immutable({
 * Register attendance
 */
 export const register = (state, { lecture }) => {
-  return state.merge({ attending: lecture, arrived: null })
+  return state.merge({ attending: lecture, arrived: null, next: null })
 }
 
 /*
@@ -67,11 +70,31 @@ export const progress = (state, { status }) => {
   })
 }
 
+/*
+* What to attend next
+*/
+export const attendNext = (state, { schedule }) => {
+  return state.merge({
+    next: schedule
+  })
+}
+
+/*
+* Attendance has missed
+*/
+export const missed = (state, { schedule }) => {
+  return state.merge({
+    next: null
+  })
+}
+
 /* ------------- Hookup Reducers To Types ------------- */
 
 export const reducer = createReducer(INITIAL_STATE, {
   [Types.ATTENDANCE_REGISTER]: register,
   [Types.ATTENDANCE_FINISHED]: finished,
   [Types.ATTENDANCE_ARRIVED]: arrived,
-  [Types.ATTENDANCE_PROGRESS]: progress
+  [Types.ATTENDANCE_PROGRESS]: progress,
+  [Types.ATTENDANCE_NEXT]: attendNext,
+  [Types.ATTENDANCE_MISSED]: missed
 })

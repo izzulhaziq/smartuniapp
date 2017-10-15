@@ -13,14 +13,16 @@
 import { delay } from 'redux-saga'
 import { call, put } from 'redux-saga/effects'
 import ScheduleActions from '../Redux/ScheduleRedux'
+import { transformSchedule } from '../Transforms/ApiTransformations'
 
 export function * syncSchedule (api, action) {
   const { dateFrom, dateTo } = action
   const response = yield call(api.syncSchedule, dateFrom, dateTo)
-  yield delay(2000)
 
   if (response.ok) {
-    yield put(ScheduleActions.scheduleSyncSuccess(response.data))
+    const schedules = yield call(transformSchedule, response)
+    console.log('schedules', schedules)
+    yield put(ScheduleActions.scheduleSyncSuccess(schedules))
   } else {
     yield put(ScheduleActions.scheduleSyncFailure())
   }

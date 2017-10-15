@@ -82,10 +82,12 @@ const ApplicationStyles = {
 const palettes = {
   // main theme colors
   //darkPrimaryColor: Color('#FB6666').alpha(1.0).toString(),
-  darkPrimaryColor: Color('#E94444').alpha(1.0).toString(),
-  primaryColor: Color('#FA5555').alpha(1.0).toString(),
-  accentColor: Color(COLOR.lightBlue300).alpha(1.0).toString(),
-  //accentColor: Color('#FD8888').alpha(1.0).toString(),
+  //darkPrimaryColor: Color('#E94444').alpha(1.0).toString(),
+  //primaryColor: Color('#FA5555').alpha(1.0).toString(),
+  darkPrimaryColor: Color(COLOR.blueGrey800).alpha(1.0).toString(),
+  primaryColor: Color(COLOR.blueGrey700).alpha(1.0).toString(),
+  //accentColor: Color(COLOR.lightBlue300).alpha(1.0).toString(),
+  accentColor: Color('#FD8888').alpha(1.0).toString(),
   complimentaryColor: Color(COLOR.lightBlue300).alpha(1.0).toString(),
   // text color palette
   primaryTextColor: Color(COLOR.black).alpha(0.87).toString(),

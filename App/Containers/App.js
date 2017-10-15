@@ -20,6 +20,7 @@ const store = createStore()
  * We separate like this to play nice with React Native's hot reloading.
  */
 class App extends Component {
+
   render () {
     return (
       <Provider store={store}>
@@ -29,6 +30,17 @@ class App extends Component {
       </Provider>
     )
   }
+}
+
+export function onPushRegistered() {
+}
+
+export function onNotificationOpened(notification) {
+  console.log("onNotificationOpened: ", notification);
+}
+
+export function onNotificationReceived(notification) {
+  console.log("onNotificationReceived: ", notification);
 }
 
 // allow reactotron overlay for fast design in dev mode

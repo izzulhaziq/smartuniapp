@@ -6,6 +6,7 @@ import { Container, Content, Footer, Body, Left } from 'native-base'
 import Schedule from '../Components/Schedule'
 import { find, sort, dropWhile } from 'ramda'
 import { isToday, isBefore } from 'date-fns'
+import { nextSchedule } from '../Services/ScheduleService'
 
 // Styles
 import styles, { listItemStyles } from './Styles/AttendanceHistoryScreenStyle'
@@ -34,16 +35,7 @@ class AttendanceHistoryScreen extends Component {
   }
 
   getNextSchedule () {
-    const now = new Date()
-    const today = find((schedule) => isToday(schedule.date), this.props.schedules)
-
-    if (today) {
-      const sorted = sort((a, b) => a.dateFrom - b.dateFrom, today.schedules)
-      var after = dropWhile((s) => isBefore(new Date(s.dateFrom), now), sorted)
-      return after ? after[0] : undefined
-    } else {
-      return undefined
-    }
+    return nextSchedule(this.props.schedules, new Date())
   }
 
   renderAttendance (item) {
@@ -72,7 +64,7 @@ class AttendanceHistoryScreen extends Component {
 
   render () {
     const { attending: activeLecture } = this.state
-    const nextSchedule = this.getNextSchedule()
+    const nextSchedule = this.props.nextSchedule
 
     return (
       <View style={styles.mainContainer}>
@@ -151,7 +143,8 @@ const mapStateToProps = (state) => {
   return {
     attending: state.attendance.attending,
     schedules: state.schedule.data,
-    recents: state.attendance.recents
+    recents: state.attendance.recents,
+    nextSchedule: state.attendance.next
   }
 }
 
